@@ -1,0 +1,10 @@
+[localsite-software]
+
+[localsite:children]
+localsite-software
+
+[software:children]
+localsite-software
+
+[test:children]
+software

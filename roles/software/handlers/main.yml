@@ -1,0 +1,12 @@
+---
+- name: start bind
+  service:
+    name: "{{image.bind_service_name}}"
+    state: started
+  become: yes
+
+- name: restart bind
+  service:
+    name: "{{image.bind_service_name}}"
+    state: restarted
+  become: yes

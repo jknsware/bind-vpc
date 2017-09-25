@@ -1,0 +1,11 @@
+[datacenter-software]
+datacenter-linux1-uat.internal-domain.net
+
+[datacenter:children]
+datacenter-software
+
+[software:children]
+datacenter-software
+
+[staging:children]
+software

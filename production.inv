@@ -1,0 +1,57 @@
+[localsite-software]
+bind1.internal-domain.net ansible_host=192.168.0.9
+bind2.internal-domain.net ansible_host=192.168.0.10
+
+[aws-test-software]
+bind1.internal-test-domain.net ansible_host=10.10.0.9
+bind2.internal-test-domain.net ansible_host=10.10.1.9
+
+[aws-production-software]
+bind1.internal-prod-domain.net ansible_host=10.0.0.9
+bind2.internal-prod-domain.net ansible_host=10.0.1.9
+
+[datacenter-test-software]
+datacenter-test-bind1.internal-domain.net ansible_host=172.17.0.9
+
+[datacenter-production-software]
+datacenter-prod-bind1.internal-domain.net ansible_host=172.16.0.9
+
+[localsite:children]
+localsite-software
+
+[aws-test:children]
+aws-test-software
+
+[aws-production:children]
+aws-production-software
+
+[aws:children]
+aws-test
+aws-production
+
+[datacenter-test:children]
+datacenter-test-software
+
+[datacenter-production:children]
+datacenter-production-software
+
+[datacenter:children]
+datacenter-test
+datacenter-production
+
+[aws-ami:children]
+aws
+
+[centos:children]
+datacenter
+localsite
+
+[software:children]
+localsite-software
+aws-test-software
+aws-production-software
+datacenter-test-software
+datacenter-production-software
+
+[production:children]
+software

@@ -1,0 +1,9 @@
+[local-software]
+vagrant-software ansible_host=192.168.100.45 ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/software/virtualbox/private_key
+
+[local:children]
+local-software
+
+[software:children]
+local-software
+

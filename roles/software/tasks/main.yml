@@ -1,0 +1,46 @@
+---
+- name: named group
+  group: name=named state=present
+  become: yes
+
+- name: named user
+  user: name=named state=present groups=named
+  become: yes
+
+- name: named data directory
+  file: path=/data/named state=directory owner=named group=named mode=0750
+  become: yes
+
+- name: install bind
+  yum: name={{item}} state=present
+  with_items:
+  - bind
+  - bind-utils
+  - bind-chroot
+  notify:
+  - start bind
+  become: yes
+
+- name: enable bind service
+  service: name={{image.bind_service_name}} enabled=yes
+  become: yes
+
+- name: named var directories
+  file: path=/var/named/chroot/var/log/named state=directory owner=named group=users mode=0750
+  become: yes
+
+- name: copy templated named config
+  template: src=conf/named.conf.j2 dest=/etc/named.conf owner=root group=named mode=0640
+  notify:
+  - restart bind
+  become: yes
+
+- name: named data links
+  file: src=/var/named/{{item.src}} dest=/data/named/{{item.dest}} state=link owner=named group=named
+  with_items:
+  - src: data
+    dest: data
+  - src: chroot/var/log/named
+    dest: logs
+  become: yes
+

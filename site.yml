@@ -1,0 +1,6 @@
+---
+- name: software
+  hosts: software
+  roles:
+  - software
+  serial: 1

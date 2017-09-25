@@ -1,0 +1,38 @@
+---
+dns:
+  default_forwarders:
+  # Datacenter Test
+  - 172.17.0.2
+  # Internal DCs
+  - 192.168.0.2
+  - 192.168.0.3
+  zones:
+  - domain: internal-domain.net
+    forwarders:
+    # Datacenter Test
+    - 172.17.0.2
+    # Austin DCs
+    - 192.168.0.2
+    - 192.168.0.3
+  - domain: internal-prod-domain.net
+    # Hosted in Route53
+    # Blackhole prod resolution
+    forwarders: []
+  - domain: internal-test-domain.net
+    # Hosted in Route53
+    forwarders:
+    # AWS Route53
+    - 10.10.0.2
+    - 169.254.169.253
+  - domain: amazonaws.com
+    forwarders:
+    # Forward requests for amazonaws.com
+    # AWS DNS Resolvers
+    - 10.10.0.2
+    - 169.254.169.253
+  - domain: elasticbeanstalk.com
+    forwarders:
+    # Forward requests for elasticbeanstalk.com
+    # AWS DNS Resolvers
+    - 10.10.0.2
+    - 169.254.169.253
